@@ -1,9 +1,7 @@
 "use client"
 
 function getData() {
-    const res = fetch("api/route.js");
-    console.log(res)
-    return "hello"
+    fetch("api/route.js").then(res =>  { return res });
 }
 
 export default function ExerciseList({ user }) {
