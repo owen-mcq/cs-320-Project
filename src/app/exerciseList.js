@@ -1,11 +1,11 @@
 "use client"
 
-function getData() {
-    fetch("api/route.js").then(res =>  { return res });
-}
+import { useState } from 'react';
 
 export default function ExerciseList({ user }) {
     // make a request to backend and return a list of exercises
-    
-    return <p>{getData()}</p>;
+    const [json, setJSON] = useState(''); 
+    fetch("api").then(res => res.text().then(text => setJSON(text)));
+
+    return <p>{json}</p>;
 }
