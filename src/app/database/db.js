@@ -9,7 +9,7 @@ async function main() {
 
     // Insert document without using a transaction
     const coll = client.db('test').collection('foo');
-    await coll.insertOne({ abc: 4});
+    await coll.insertOne({ abc: 'out of local test'});
     
     console.log('Document inserted successfully');
     
