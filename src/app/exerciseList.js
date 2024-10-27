@@ -7,8 +7,8 @@ export default function ExerciseList({ params }) {
     const [json, setJSON] = useState(''); 
     useEffect(
         () => {
-            fetch("api/?" + new URLSearchParams({muscle: ['dfa', 'dsd']})).then(res => res.text()).then(text => setJSON(text)) }
+            fetch("api/?" + new URLSearchParams({muscle: 'abs, calves'})).then(res => res.text()).then(text => setJSON(text)) }
     );
 
-    return <p>{json}</p>;
+    return (<p>{json}</p>);
 }
