@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-const api = 'https://exercisedb-api.vercel.app/';
+const api = "http://exercisedb-api.vercel.app/";
 
+<<<<<<< HEAD
 export async function GET(request) {
     // Want exercise within muscle group parameters and within time if we have time data
     // favor exercises that the user liked
