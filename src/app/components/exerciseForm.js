@@ -6,6 +6,10 @@ export default function Form() {
   const [isLoading, setIsLoading] = useState(false);
   const [muscles, setMuscles] = useState("");
 
+  async function storeWorkout() {
+    await fetch('api', {method: 'POST', body: JSON.stringify(exercises)});
+  }
+
   const handleSubmit = async () => {
     try {
       setIsLoading(true);
@@ -22,7 +26,15 @@ export default function Form() {
   };
 
   return (
+
+    
+
     <div className="p-4">
+      <form action={storeWorkout}>
+    <button type="submit">
+      Save Workout
+    </button>
+   </form>
       <form action={handleSubmit} className="mb-8">
         <div className="mb-4">
           <label className="block mb-2">Enter muscle group:</label>
@@ -34,7 +46,7 @@ export default function Form() {
             className="w-full border p-2 rounded mb-4"
           />
         </div>
-
+        
         <button
           type="submit"
           disabled={isLoading || !muscles.trim()}
@@ -64,7 +76,11 @@ export default function Form() {
             ))}
           </div>
         </div>
-      )}
+      
+     
+      )
+     
+    }
     </div>
   );
 }
