@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 
 export default function Form() {
   // list of exercises state
@@ -24,9 +23,9 @@ export default function Form() {
   return (
     <>
       <form action={handleSubmit}>
-        <Button type="submit" disabled={isLoading}>
+        <button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Generate Workout"}
-        </Button>
+        </button>
       </form>
 
       {/* if exercises were successfully fetched */}
