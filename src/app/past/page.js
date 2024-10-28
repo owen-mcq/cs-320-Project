@@ -1,0 +1,23 @@
+import Form from "../components/exerciseForm";
+const { MongoClient } = require('mongodb');
+import styles from "./page.module.css";
+
+export default async function Home() {
+
+    async function exerciseFromDB() {
+        const client = new MongoClient('mongodb://localhost:27017');
+        // Connect the client
+        await client.connect();
+
+        const coll = client.db('workoutAppBackend').collection('workouts');
+        const ret = await coll.findOne({date: 0});
+        await client.close();
+        return ret.exercises;
+    }
+
+    return (
+        <>
+            <main className={styles.main}><div className={styles.page}><Form exercises={await exerciseFromDB()} /></div></main>   
+        </>
+    );
+}
