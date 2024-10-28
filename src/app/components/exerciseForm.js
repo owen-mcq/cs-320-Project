@@ -12,7 +12,9 @@ export default function Form() {
     try {
       setIsLoading(true);
       // const res = await fetch("http://localhost:3000/api/");
-      const res = await fetch("api/?" + new URLSearchParams({ muscle: "abs" }));
+      const res = await fetch(
+        "api/?" + new URLSearchParams({ muscle: muscles }),
+      );
       const data = await res.json();
       setExercises(data[0].data.exercises);
     } catch (error) {
@@ -23,8 +25,8 @@ export default function Form() {
   };
 
   return (
-    <>
-      <form action={handleSubmit}>
+    <div className="w-full max-w-4xl mx-auto p-6 space-y-6">
+      <form action={handleSubmit} className="space-y-6">
         <button type="submit" disabled={isLoading}>
           {isLoading ? "Loading..." : "Generate Workout"}
         </button>
@@ -52,6 +54,6 @@ export default function Form() {
           </ul>
         </>
       )}
-    </>
+    </div>
   );
 }
