@@ -6,13 +6,15 @@ export default function Form() {
   const [exercises, setExercises] = useState([]);
   // isloading state so that user can only request one workout at a time
   const [isLoading, setIsLoading] = useState(false);
+  const [muscles, setMuscles] = useState("");
 
   const handleSubmit = async (formData) => {
     try {
       setIsLoading(true);
-      const res = await fetch("http://localhost:3000/api/");
+      // const res = await fetch("http://localhost:3000/api/");
+      const res = await fetch("api/?" + new URLSearchParams({ muscle: "abs" }));
       const data = await res.json();
-      setExercises(data.data.exercises);
+      setExercises(data[0].data.exercises);
     } catch (error) {
       console.error("Error fetching exercises:", error);
     } finally {
