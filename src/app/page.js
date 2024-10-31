@@ -1,41 +1,31 @@
-'use client'
-
 import Form from "@/app/components/exerciseForm";
-import { useState } from "react";
-import Image from "next/image";
+import Link from "next/link";
+const { MongoClient } = require('mongodb');
 
-export default function Home() {// list of exercises state
-  const [exercises, setExercises] = useState([]);
-  // isloading state so that user can only request one workout at a time
-  const [isLoading, setIsLoading] = useState(false);
-  const [muscles, setMuscles] = useState("");
-
-  const handleSubmit = async (formData) => {
+async function storeWorkout(workout) {
+  'use server'
+    const client = new MongoClient('mongodb://localhost:27017');
     try {
-      setIsLoading(true);
-      // const res = await fetch("http://localhost:3000/api/");
-      const res = await fetch("api/?" + new URLSearchParams({ muscle: ["abs", "biceps"] }));
-      const data = await res.json();
-      let exercises = [];
-      // const t = data[0].data.exercises.length;
-      for (let i = 0; i < 12 && i < data[0].data.exercises.length; i++) {
-        exercises.push(data[0].data.exercises.splice(Math.random() * (data[0].data.exercises.length - i), 1)[0]);
-        // console.log(data[0].data.exercises.splice(Math.random() * (data[0].data.exercises.length - i), 1));
-      }
-      console.log(exercises)
-      setExercises(exercises);
-    } catch (error) {
-      console.error("Error fetching exercises:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+        // Connect the client
+        await client.connect();
 
+        // Insert document without using a transaction
+        const coll = client.db('workoutAppBackend').collection('workouts');
+        await coll.updateOne({date: 0}, {$set: {exercises: workout}}, {upsert: true});
+    } catch (error) {
+        console.error(error);
+    } finally {
+      await client.close();
+    }
+    // Save workoutToSave into the database
+}
+
+export default async function Home() {
   return (
     <div className="min-h-screen p-4">
       <main className="max-w-4xl mx-auto">
-        <a href='past'>View Past Workout</a>
-        <Form />
+        <Link href='past'>View Past Workout</Link>
+        <Form storeWorkout={storeWorkout} />
       </main>
     </div>
   );

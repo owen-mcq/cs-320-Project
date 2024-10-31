@@ -1,9 +1,7 @@
 export default function List( {exercises} ) {
     return (
-      <>
-        {exercises.length > 0 && (
           <div>
-            <h1 className="text-xl font-bold mb-4">Exercises</h1>
+            <h1 className="text-xl font-bold mb-4">Today's Workout</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {exercises.map((item, index) => (
                 <div key={index} className="border p-4 rounded">
@@ -21,7 +19,5 @@ export default function List( {exercises} ) {
               ))}
             </div>
           </div>
-        )}
-      </>
     );
   }
