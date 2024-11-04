@@ -9,12 +9,6 @@ export async function GET(request) {
     if (key === "muscle") muscles = value.split(",");
   }
   
-  const exercises = (await Promise.all(
-    muscles.map(async (muscle) => 
-      // TODO dont await within first iteration
-      (await fetch(api + `api/v1/muscles/${muscle}/exercises`)
-    ).json())))
-    .reduce((total, group) => total.concat(group.data.exercises), []);
-    console.log(exercises)
+  const exercises = (await Promise.all((await Promise.all(muscles.map(muscle => fetch(api + `api/v1/muscles/${muscle}/exercises`)))).map(res => res.json()))).reduce((total, group) => total.concat(group.data.exercises), []);
   return NextResponse.json(exercises);
 }
