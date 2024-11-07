@@ -6,10 +6,20 @@ export default async function Home() {
 
     async function exerciseFromDB() {
         const client = new MongoClient('mongodb://localhost:27017');
-        // Connect the client
         await client.connect();
 
         const coll = client.db('workoutAppBackend').collection('workouts');
+        const exercises = workoutToSave.exercises;
+
+        const insertPromises = workoutToSave.map(exercise =>
+            coll.updateOne(
+                { exerciseId: exercise.exerciseId },
+                { $set: exercise },
+                { upsert: true }
+            )
+        );
+
+        await Promise.all(insertPromises);
         const ret = await coll.findOne({date: 0});
         await client.close();
         return ret.exercises;
