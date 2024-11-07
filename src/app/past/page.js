@@ -6,7 +6,6 @@ export default async function Home() {
 
     async function exerciseFromDB() {
         const client = new MongoClient('mongodb://localhost:27017');
-        // Connect the client
         await client.connect();
 
         const coll = client.db('workoutAppBackend').collection('workouts');

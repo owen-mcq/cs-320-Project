@@ -8,9 +8,18 @@ async function storeWorkout(workout) {
     try {
         // Connect the client
         await client.connect();
-        // Insert document without using a transaction
+        
         const coll = client.db('workoutAppBackend').collection('workouts');
-        await coll.updateOne({date: 0}, {$set: {exercises: workout}}, {upsert: true});
+        const exercises = workoutToSave.exercises;
+
+        const insertPromises = workoutToSave.map(exercise =>
+            coll.updateOne(
+                { exerciseId: exercise.exerciseId },
+                { $set: exercise },
+                { upsert: true }
+            )
+        );
+        await Promise.all(insertPromises);
     } catch (error) {
         console.error(error);
     } finally {
