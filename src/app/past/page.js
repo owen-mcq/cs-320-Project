@@ -9,17 +9,6 @@ export default async function Home() {
         await client.connect();
 
         const coll = client.db('workoutAppBackend').collection('workouts');
-        const exercises = workoutToSave.exercises;
-
-        const insertPromises = workoutToSave.map(exercise =>
-            coll.updateOne(
-                { exerciseId: exercise.exerciseId },
-                { $set: exercise },
-                { upsert: true }
-            )
-        );
-
-        await Promise.all(insertPromises);
         const ret = await coll.findOne({date: 0});
         await client.close();
         return ret.exercises;
