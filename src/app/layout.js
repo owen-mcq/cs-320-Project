@@ -1,6 +1,7 @@
 import "./globals.css";
 import SideNav from "@/app/components/side-nav";
 
+
 export const metadata = {
   title: "Werk",
   description: "Workout generation app",
