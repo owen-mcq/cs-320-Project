@@ -1,6 +1,5 @@
 import "./globals.css";
-import SideNav from "@/app/components/side-nav";
-
+import SideNav from "@/components/side-nav";
 
 export const metadata = {
   title: "Werk",
