@@ -1,5 +1,5 @@
-import NavLinks from "@/app/components/nav-links";
-import WerkLogo from "@/app/components/werk-logo";
+import NavLinks from "@/components/ui/nav-links";
+import WerkLogo from "@/components/ui/werk-logo";
 
 export default function SideNav() {
   return (
