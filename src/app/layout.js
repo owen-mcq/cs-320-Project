@@ -1,5 +1,4 @@
 import "./globals.css";
-import SideNav from "@/components/ui/side-nav";
 
 export const metadata = {
   title: "Werk",
@@ -9,11 +8,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        
-         
-            {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
