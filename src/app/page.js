@@ -1,7 +1,7 @@
 // import Form from "@/components/exerciseForm";
 import Link from "next/link";
-import { ExerciseForm } from "@/components/ui/workout-form";
-const { MongoClient } = require("mongodb");
+import SideNav from "@/app/components/side-nav";
+const { MongoClient } = require('mongodb');
 
 async function storeWorkout(workout) {
   "use server";
@@ -36,5 +36,8 @@ export default async function Home() {
         <ExerciseForm />
       </main>
     </div>
+    </div>
+    </div>
+    </>
   );
 }
