@@ -20,7 +20,6 @@ export function PartSelector({ selectedParts, setSelectedParts }) {
   return (
     <Selector
       items={bodyParts}
-      columns={"4"}
       selectedValues={selectedParts}
       setSelectedValues={setSelectedParts}
     />
@@ -62,8 +61,6 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
   return (
     <Selector
       items={equipment}
-      columns={"6"}
-      borderColor="red-500"
       selectedValues={selectedEquipment}
       setSelectedValues={setSelectedEquipment}
     />
@@ -76,13 +73,11 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
  */
 export function Selector({
   items = [],
-  columns = "4",
-  borderColor = "black",
   selectedValues = [],
   setSelectedValues,
 }) {
   return (
-    <div className={`grid grid-cols-${columns} items-center gap-2`}>
+    <div className={`grid grid-cols-4 items-center gap-2`}>
       {items.map((item) => {
         const isPressed = selectedValues.includes(item);
         return (
@@ -90,9 +85,7 @@ export function Selector({
             key={item}
             className={cn(
               "flex items-center jusitfy-center text-black text-xs border-2",
-              isPressed
-                ? `border-${borderColor}`
-                : "border-transparent bg-gray-50",
+              isPressed ? `border-black` : "border-transparent bg-gray-50",
             )}
             pressed={isPressed}
             onPressedChange={(pressed) => {

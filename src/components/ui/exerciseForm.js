@@ -1,7 +1,7 @@
 "use client";
 import "./exerciseForm.css";
 import { useState } from "react";
-import List from "@/components/exerciseList";
+import List from "@/components/ui/exerciseList";
 
 export default function Form({ storeWorkout }) {
   const [workout, setWorkout] = useState([]);
