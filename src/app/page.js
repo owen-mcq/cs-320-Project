@@ -1,6 +1,6 @@
-import Form from "@/components/exerciseForm";
+// import Form from "@/components/exerciseForm";
 import Link from "next/link";
-import { ExerciseForm } from "@/components/form";
+import { ExerciseForm } from "@/components/ui/workout-form";
 const { MongoClient } = require("mongodb");
 
 async function storeWorkout(workout) {
@@ -31,8 +31,8 @@ async function storeWorkout(workout) {
 
 export default async function Home() {
   return (
-    <div className="min-h-screen p-4">
-      <main className="w-full mx-auto">
+    <div className="min-h-screen">
+      <main className="w-full">
         <ExerciseForm />
       </main>
     </div>

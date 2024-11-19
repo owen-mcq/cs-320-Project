@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { PartSelector, EquipmentSelector } from "@/components/selectors";
+import { PartSelector, EquipmentSelector } from "@/components/ui/selectors";
 
 import { useState } from "react";
 
@@ -30,11 +30,17 @@ export function ExerciseForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="flex flex-col gap-4 items-center">
-      <div className="flex flex-row gap-2">
-        <Card className="w-3/5">
+    <form
+      onSubmit={handleSubmit}
+      className="flex grow flex-col gap-2 items-center"
+    >
+      <div className="flex grow flex-rows justify-center gap-2">
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Workout Type</CardTitle>
+            <CardDescription>
+              Select body parts to generate exercises for
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <PartSelector
@@ -43,7 +49,7 @@ export function ExerciseForm() {
             />
           </CardContent>
         </Card>
-        <Card>
+        <Card className="w-full">
           <CardHeader>
             <CardTitle>Exclude Equipment</CardTitle>
             <CardDescription>
