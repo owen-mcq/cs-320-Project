@@ -1,5 +1,6 @@
 import Form from "@/app/components/exerciseForm";
 import Link from "next/link";
+import Nav from '@/app/components/nav'
 const { MongoClient } = require('mongodb');
 
 async function storeWorkout(workout) {
@@ -32,6 +33,7 @@ export default async function Home() {
   return (
     <div className="min-h-screen p-4">
       <main className="max-w-4xl mx-auto">
+        <a href="/api/logout">Logout</a>
         <Link href='past'>View Past Workout</Link>
         <Form storeWorkout={storeWorkout} />
       </main>
