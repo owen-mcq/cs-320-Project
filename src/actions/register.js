@@ -1,7 +1,7 @@
 "use server";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
-import bcrypt from "bcryptjs";
+import bcrypt from "bcrypt";
 
 export async function register(values) {
   const { username, password } = values;
