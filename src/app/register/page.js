@@ -11,9 +11,8 @@ export default function Register() {
 
   const handleSubmit = async (formData) => {
     const r = await register({
-      email: formData.get("email"),
+      username: formData.get("username"),
       password: formData.get("password"),
-      name: formData.get("name"),
     });
     ref.current?.reset();
     if (r?.error) {
@@ -37,7 +36,7 @@ export default function Register() {
 
         <label className="w-full text-sm">Username</label>
         <input
-          type="username"
+          type="input"
           placeholder="Username"
           className="w-full h-8 border border-solid border-black py-1 px-2.5 rounded"
           name="username"

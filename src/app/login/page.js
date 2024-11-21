@@ -12,7 +12,7 @@ export default function Login() {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const res = await signIn("credentials", {
-      email: formData.get("email"),
+      username: formData.get("username"),
       password: formData.get("password"),
       redirect: false,
     });
@@ -20,7 +20,7 @@ export default function Login() {
       setError(res.error);
     }
     if (res?.ok) {
-      return router.push("/");
+      return router.push("/main");
     }
   };
 
@@ -35,7 +35,7 @@ export default function Login() {
         <h1 className="mb-5 w-full text-2xl font-bold">Sign In</h1>
         <label className="w-full text-sm">Username</label>
         <input
-          type="username"
+          type="text"
           placeholder="Username"
           className="w-full h-8 border border-solid border-black rounded p-2"
           name="username"

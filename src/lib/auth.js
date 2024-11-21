@@ -9,11 +9,11 @@ export const authOptions = {
       name: "Credentials",
       id: "credentials",
       credentials: {
-        email: { label: "Email", type: "text" },
+        username: { label: "Username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       // verify user creditials
-      async authoize(credentials) {
+      async authorize(credentials) {
         await connectDB();
         const user = await User.findOne({
           username: credentials?.username,
@@ -33,5 +33,25 @@ export const authOptions = {
   ],
   session: {
     strategy: "jwt",
+  },
+  // Add callbacks to customize token and session
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.username = user.username;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.id = token.id;
+      session.user.username = token.username;
+      return session;
+    },
+  },
+  // Optional: add error handling
+  pages: {
+    signIn: "/login",
+    error: "/login", // Error code passed in query string as ?error=
   },
 };
