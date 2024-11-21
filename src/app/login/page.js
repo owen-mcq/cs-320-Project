@@ -33,7 +33,7 @@ export default function Login() {
       >
         {error && <div className="text-black">{error}</div>}
         <h1 className="mb-5 w-full text-2xl font-bold">Sign In</h1>
-        <label className="w-full text-sm">Email</label>
+        <label className="w-full text-sm">Username</label>
         <input
           type="username"
           placeholder="Username"
@@ -49,7 +49,10 @@ export default function Login() {
             name="password"
           />
         </div>
-        <button className="w-full border border-solid border-black rounded">
+        <button
+          className="w-full border border-solid border-black py-1.5 mt-2.5 rounded
+        transition duration-150 ease hover:bg-black hover:text-white"
+        >
           Sign In
         </button>
 
@@ -63,4 +66,3 @@ export default function Login() {
     </section>
   );
 }
-
