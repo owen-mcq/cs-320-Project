@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <Provider>
+      {/* <Provider> */}
         <body>
           <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
             <div className="w-full flex-none md:w-64">
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </body>
-      </Provider>
+      {/* </Provider> */}
     </html>
   );
 }

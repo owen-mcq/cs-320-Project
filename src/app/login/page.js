@@ -20,6 +20,7 @@ export default function Login() {
       setError(res.error);
     }
     if (res?.ok) {
+      console.log('signed in')
       return router.push("/main");
     }
   };
