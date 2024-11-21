@@ -3,8 +3,8 @@ import bcrypt from 'bcrypt';
 import { cookies } from 'next/headers'
 const { MongoClient } = require('mongodb');
 
-const client = new MongoClient('mongodb://127.0.0.1:27017/');
-let sessionID = 0;
+// const client = new MongoClient('mongodb://127.0.0.1:27017/');
+// let sessionID = 0;
 
 async function authenticate(rusername, rpassword) {
     let ret;

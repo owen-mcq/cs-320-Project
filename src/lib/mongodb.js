@@ -11,6 +11,7 @@ export async function connectDB() {
     }
   } catch (error) {
     // connection failed
+    console.log(error);
     return Promise.reject(error);
   }
 }
