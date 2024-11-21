@@ -1,10 +1,15 @@
-import { cookies } from 'next/headers';
-import { NextResponse, NextRequest } from 'next/server'
+// export { default } from "next-auth/middleware"
+import { withAuth } from "next-auth/middleware"
+export const config = { pages: {signIn: '/auth/signin'}, matcher: ['/', '/main'], secret: "x0NCOOymWv+aFes8G00rGFbQEP3wSselAN7qjWdtNBw=" }
 
-const protectedRoutes= ['/', '/past', '/api'];
-
-export default async function middleware(request) {
-    if (protectedRoutes.includes(request.nextUrl.pathname) && (await cookies()).get('session') === undefined) {
-        return NextResponse.redirect(new URL('/login', request.url));
-    }
-}
+export default withAuth(
+    // `withAuth` augments your `Request` with the user's token.
+    function middleware(req) {
+      console.log('dafdafd')
+    },
+    {
+      callbacks: {
+        authorized: ({ token }) => token,
+      },
+    },
+  )
