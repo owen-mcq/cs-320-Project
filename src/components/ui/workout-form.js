@@ -17,17 +17,17 @@ import { useState } from "react";
 /**
  * This is a form that contains selectors for bodyparts and excluded equipment
  */
-export function ExerciseForm() {
+export function ExerciseForm({ handleSubmit }) {
   // arrays to store the equipment and bodyparts that are selected
   const [equipment, setEquipment] = useState([]);
   const [bodyParts, setBodyParts] = useState([]);
 
   // test onSubmit handler just to make sure everything works
   // TODO: make this work with API
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(equipment, bodyParts);
-  };
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   console.log(equipment, bodyParts);
+  // };
 
   return (
     <form

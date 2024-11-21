@@ -1,8 +1,9 @@
 "use client"
 
 import Link from "next/link";
+import { useState } from "react";
 import { ExerciseForm } from "@/components/ui/workout-form";
-// const { MongoClient } = require("mongodb");
+import List from '@/components/ui/exerciseList';
 import { useSession } from "next-auth/react";
 
 // async function storeWorkout(workout) {
@@ -32,13 +33,21 @@ import { useSession } from "next-auth/react";
 // }
 
 export default function Home() {
-  // const { data: session, status } = useSession();
+  const [exercise, setExercise] = useState([]);
   // console.log(status)
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    let muscles = await (await fetch("api/?" + new URLSearchParams({muscle: ['abs', 'calves']}))).json();
+    
+    setExercise(muscles);
+  }
 
   return (
     <div className="min-h-screen">
       <main className="w-full">
-        <ExerciseForm />
+        <ExerciseForm handleSubmit={handleSubmit}/>
+        <List exercises={exercise}/>
       </main>
     </div>
   );
