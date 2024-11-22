@@ -10,18 +10,20 @@ async function get(url) {
 
 // get all exercises from the api
 export async function getExercises() {
+  const results = [];
+
   const exercises = await fetch(`${api}/api/v1/exercises?offset=0&limit=100`);
   const json = await exercises.json();
   let data = json.data;
 
-  console.log(data.exercises);
-
+  results.push(data.exercises);
   let next = data.nextPage;
 
   while (next) {
     data = await get(next);
+    results.push(data.exercises);
 
     next = data.nextPage;
-    console.log(data.exercises);
   }
+  return results;
 }
