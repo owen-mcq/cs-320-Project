@@ -4,9 +4,13 @@ import mongoose from "mongoose";
 const exerciseSchema = new mongoose.Schema({
   exerciseId: { type: String, required: true },
   name: { type: String, required: true },
+  bodyParts: { type: [String], required: true },
   targetMuscles: { type: [String], required: true },
   equipment: { type: [String], required: true },
   instructions: { type: [String], required: true },
 });
 
-export default Exercise = mongoose.model("Exericise", exerciseSchema);
+const Exercise =
+  mongoose.models?.Exercise || mongoose.model("Exercise", exerciseSchema);
+
+export default Exercise;

@@ -1,11 +1,26 @@
-import { getExercises } from "./get_exercises.js";
+import mongoose from "mongoose";
+import Exercise from "@/lib/models/Exercise.js";
+import { getExercises } from "@/lib/get_exercises.js";
 
 async function run() {
-  const data = await getExercises();
+  await mongoose.connect("mongodb://127.0.0.1:27017/test");
 
-  for (const page of data) {
-    for (const exercise of page) {
-    }
+  try {
+    const test = new Exercise({
+      exerciseId: "131231",
+      name: "pull up",
+      bodyParts: ["back"],
+      targetMuscles: ["waist"],
+      equipment: ["body weight"],
+      instructions: ["foo"],
+    });
+
+    await test.save();
+    console.log("exercise saved");
+  } catch (error) {
+    console.log(error);
+  } finally {
+    await mongoose.connection.close();
   }
 }
 
