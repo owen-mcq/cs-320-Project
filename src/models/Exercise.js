@@ -10,7 +10,8 @@ const exerciseSchema = new mongoose.Schema({
   instructions: { type: [String], required: true },
 });
 
-const Exercise =
-  mongoose.models?.Exercise || mongoose.model("Exercise", exerciseSchema);
+// create model and specify collection name
+// exercises will be stored in "exercises" collection
+const Exercise = mongoose.model("Exercise", exerciseSchema, "exercises");
 
 export default Exercise;

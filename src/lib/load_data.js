@@ -1,22 +1,37 @@
+// script to load data from api and store in local database
 import mongoose from "mongoose";
-import Exercise from "@/lib/models/Exercise.js";
-import { getExercises } from "@/lib/get_exercises.js";
+import Exercise from "../models/Exercise.js";
+import { getExercises } from "./get_exercises.js";
 
 async function run() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/test");
+  await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
 
   try {
-    const test = new Exercise({
-      exerciseId: "131231",
-      name: "pull up",
-      bodyParts: ["back"],
-      targetMuscles: ["waist"],
-      equipment: ["body weight"],
-      instructions: ["foo"],
-    });
+    // returns 14 x 100 (ish) array of exercises
+    const data = await getExercises();
 
-    await test.save();
-    console.log("exercise saved");
+    for (const page of data) {
+      for (const exercise of page) {
+        // checks if exercise is already in database (prevent dupes)
+        const exists = await Exercise.findOne({
+          exerciseId: exercise.exerciseId,
+        });
+        if (!exists) {
+          const newExercise = new Exercise({
+            exerciseId: exercise.exerciseId,
+            name: exercise.name,
+            bodyParts: exercise.bodyParts,
+            targetMuscles: exercise.targetMuscles,
+            equipment: exercise.equipment,
+            instructions: exercise.instructions,
+          });
+
+          // save this specific exercise to mongo
+          await newExercise.save();
+        }
+      }
+    }
+    console.log("exercises saved");
   } catch (error) {
     console.log(error);
   } finally {

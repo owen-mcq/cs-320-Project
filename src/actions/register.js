@@ -19,7 +19,12 @@ export async function register(values) {
       username,
       password: hashedPassword,
     });
-    const savedUser = await user.save();
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+      }
+    });
     await mongoose.disconnect();
   } catch (error) {
     console.log(error);
