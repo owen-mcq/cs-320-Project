@@ -7,7 +7,7 @@ export async function register(values) {
   const { username, password } = values;
 
   try {
-    const { connection } = await mongoose.connect('mongodb://127.0.0.1:27017/workoutAppBackend');
+    await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
     const userFound = await User.findOne({ username });
     if (userFound) {
       return {
@@ -19,9 +19,10 @@ export async function register(values) {
       username,
       password: hashedPassword,
     });
-    const savedUser = await user.save();
-    await mongoose.disconnect();
+    await user.save();
   } catch (error) {
     console.log(error);
+  } finally {
+    await mongoose.disconnect();
   }
 }
