@@ -1,17 +1,28 @@
 // script to load data from api and store in local database
 import mongoose from "mongoose";
 import Exercise from "../models/Exercise.js";
-import { getExercises } from "./get_exercises.js";
+// import { getExercises } from "./get_exercises.mjs";
+
+const api = "http://exercisedb-api.vercel.app";
+
+// get all exercises from the api
+export async function getExercises() {
+  const h = async url => (await ((await fetch(url)).json())).data;
+  const results = [];
+  // Get for all pages
+  for (let nextUrl = `${api}/api/v1/exercises?offset=0&limit=100`, data = await h(nextUrl); data.nextPage; nextUrl = data.nextPage, data = await h(nextUrl)) {
+    results.push(data.exercises);
+  }
+  return results.flat();
+}
+
 
 async function run() {
   await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
-
+  // returns 14 x 100 (ish) array of exercises
+  const data = await getExercises();
   try {
-    // returns 14 x 100 (ish) array of exercises
-    const data = await getExercises();
-
-    for (const page of data) {
-      for (const exercise of page) {
+    for (const exercise of data) {
         // checks if exercise is already in database (prevent dupes)
         const exists = await Exercise.findOne({
           exerciseId: exercise.exerciseId,
@@ -29,7 +40,7 @@ async function run() {
           // save this specific exercise to mongo
           await newExercise.save();
         }
-      }
+      
     }
     console.log("exercises saved");
   } catch (error) {
