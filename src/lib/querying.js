@@ -11,7 +11,7 @@ async function findWorkout(bodyPartList, excludedEquipment) {
 
     // database name: workoutAppBackend 
     // collection name: workouts
-    const coll = client.db("workoutAppBackend").collection("workouts");
+    const coll = client.db("workoutAppBackend").collection("exercises");
 
     const query = {
       bodyParts: { $in: bodyPartList },
