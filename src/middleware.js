@@ -9,5 +9,4 @@ export default withAuth(
         return NextResponse.redirect(new URL('/main', req.url));
       }
     },
-  },
 );
