@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { FormEvent, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { register } from "@/actions/register";
@@ -9,7 +9,7 @@ export default function Register() {
   const router = useRouter();
   const ref = useRef(null);
 
-   async function handleSubmit(formData) {
+  const handleSubmit = async (formData) => {
     const r = await register({
       username: formData.get("username"),
       password: formData.get("password"),

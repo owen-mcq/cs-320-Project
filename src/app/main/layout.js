@@ -1,4 +1,5 @@
 import SideNav from "@/components/ui/side-nav";
+import { Provider } from "@/app/provider";
 
 export const metadata = {
   title: "Werk",
@@ -8,6 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      {/* <Provider> */}
         <body>
           <div className="flex h-screen flex-col md:flex-row md:overflow-hidden">
             <div className="w-full flex-none md:w-64">
@@ -18,6 +20,7 @@ export default function RootLayout({ children }) {
             </div>
           </div>
         </body>
+      {/* </Provider> */}
     </html>
   );
 }

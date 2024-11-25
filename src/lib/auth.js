@@ -1,10 +1,11 @@
+import { connectDB } from "@/lib/mongodb";
 import mongoose from "mongoose";
 import User from "@/models/User";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 
 export const authOptions = {
-  secret: "x0NCOOymWv+aFes8G00rGFbQEP3wSselAN7qjWdtNBw=",
+  secret: 'x0NCOOymWv+aFes8G00rGFbQEP3wSselAN7qjWdtNBw=',
   providers: [
     credentials({
       name: "Credentials",
@@ -15,7 +16,7 @@ export const authOptions = {
       },
       // verify user creditials
       async authorize(credentials) {
-        await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+        const { connection } = await mongoose.connect('mongodb://127.0.0.1:27017/workoutAppBackend');
         const user = await User.findOne({
           username: credentials?.username,
         }).select("+password");
