@@ -17,21 +17,14 @@ import { useState } from "react";
 /**
  * This is a form that contains selectors for bodyparts and excluded equipment
  */
-export function ExerciseForm() {
+export function ExerciseForm({ handler }) {
   // arrays to store the equipment and bodyparts that are selected
-  const [equipment, setEquipment] = useState([]);
-  const [bodyParts, setBodyParts] = useState([]);
-
-  // test onSubmit handler just to make sure everything works
-  // TODO: make this work with API
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(equipment, bodyParts);
-  };
+  // const [equipment, setEquipment] = useState([]);
+  // const [bodyParts, setBodyParts] = useState([]);
 
   return (
     <form
-      onSubmit={handleSubmit}
+      action={handler}
       className="flex grow flex-col gap-2 items-center"
     >
       <div className="flex grow flex-rows justify-center gap-2">
@@ -44,8 +37,8 @@ export function ExerciseForm() {
           </CardHeader>
           <CardContent>
             <PartSelector
-              selectedParts={bodyParts}
-              setSelectedParts={setBodyParts}
+              // selectedParts={bodyParts}
+              // setSelectedParts={setBodyParts}
             />
           </CardContent>
         </Card>
@@ -58,8 +51,8 @@ export function ExerciseForm() {
           </CardHeader>
           <CardContent>
             <EquipmentSelector
-              selectedEquipment={equipment}
-              setSelectedEquipment={setEquipment}
+              // selectedEquipment={equipment}
+              // setSelectedEquipment={setEquipment}
             />
           </CardContent>
         </Card>
