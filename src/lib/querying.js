@@ -1,11 +1,11 @@
 const { MongoClient } = require("mongodb");
 
-async function findWorkout(bodyPartList, excludedEquipment) {
+export default async function findWorkout(bodyPartList, excludedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // excludedEquipment - array of strings i.e. ["band", "barbell"]
 
   const client = new MongoClient("mongodb://localhost:27017");
-
+  console.log(bodyPartList);
   try {
     await client.connect();
 

@@ -19,6 +19,7 @@ export function PartSelector({ selectedParts, setSelectedParts }) {
 
   return (
     <Selector
+      prefix="parts_"
       items={bodyParts}
       selectedValues={selectedParts}
       setSelectedValues={setSelectedParts}
@@ -60,6 +61,7 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
 
   return (
     <Selector
+      prefix="equipment_"
       items={equipment}
       selectedValues={selectedEquipment}
       setSelectedValues={setSelectedEquipment}
@@ -72,33 +74,37 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
  * TODO: Add a "clear selection" function
  */
 export function Selector({
+  prefix,
   items = [],
   selectedValues = [],
   setSelectedValues,
 }) {
   return (
     <div className={`grid grid-cols-4 items-center gap-2`}>
-      {items.map((item) => {
-        const isPressed = selectedValues.includes(item);
-        return (
-          <Toggle
-            key={item}
-            className={cn(
-              "flex items-center jusitfy-center text-black text-xs border-2",
-              isPressed ? `border-black` : "border-transparent bg-gray-50",
-            )}
-            pressed={isPressed}
-            onPressedChange={(pressed) => {
-              const newValue = pressed
-                ? [...selectedValues, item]
-                : selectedValues.filter((val) => val !== item);
-              setSelectedValues(newValue);
-            }}
-          >
-            {item}
-          </Toggle>
-        );
-      })}
+      {items.map((item, index) => 
+        (
+          <>
+            <input
+              type="checkbox"
+              name={prefix + item}
+              key={index + 1000}
+              // className={cn(
+              //   "flex items-center jusitfy-center text-black text-xs border-2",
+              //   isPressed ? `border-black` : "border-transparent bg-gray-50",
+              // )}
+              // pressed={isPressed}
+              // onPressedChange={(pressed) => {
+              //   const newValue = pressed
+              //     ? [...selectedValues, item]
+              //     : selectedValues.filter((val) => val !== item);
+              //   setSelectedValues(newValue);
+              // }}
+            />
+            <label for={item} key={index}>{item}</label>
+          </>
+          
+        )
+      )}
     </div>
   );
 }
