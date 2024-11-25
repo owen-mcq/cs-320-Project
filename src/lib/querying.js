@@ -18,8 +18,10 @@ async function findWorkout(bodyPartList, excludedEquipment) {
       exEquipment: { $nin: excludedEquipment }
     };
 
-    const workouts = await coll.find(query).toArray();
+    const workouts = await coll.find(query).limit(12).toArray();
 
+    // returns an array of workout documents that match the query
+    // limited to a maximum of 12 exercises
     return workouts;
 
   } catch (error) {
