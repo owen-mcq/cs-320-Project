@@ -2,19 +2,21 @@
 
 import queryer from '@/lib/querying';
 
+async function storeWorkout(workout) {
+    
+}
+
 export default async function request(_, form) {
     const data = form.entries().filter(([_, value]) => value === 'on').map(([key, _]) => key);
-    const equipment = data.map((value) => {
-        const match = value.match(/equipment_(.*)/);
+    const h_check_seperator = pattern => data.map((value) => {
+        const match = value.match(pattern);
         if (match) {
             return match[1];
         }
     }).filter(Boolean);
-    const muscles = data.map((value) => {
-        const match = value.match(/parts_(.*)/);
-        if (match) {
-            return match[1];
-        }
-    }).filter(Boolean);
-    return JSON.stringify(await queryer(Array.from(muscles), Array.from(equipment)));
+    const equipment = h_check_seperator(/equipment_(.*)/);
+    const muscles = h_check_seperator(/parts_(.*)/);
+    const workout = await queryer(Array.from(muscles), Array.from(equipment));
+    await storeWorkout(workout);
+    return JSON.stringify(workout);
   }
