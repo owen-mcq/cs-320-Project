@@ -1,8 +1,8 @@
 const { MongoClient } = require("mongodb");
 
-export default async function findWorkout(bodyPartList, excludedEquipment) {
+export default async function findWorkout(bodyPartList, includedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
-  // excludedEquipment - array of strings i.e. ["band", "barbell"]
+  // includedEquipment - array of strings i.e. ["band", "barbell"]
 
   const client = new MongoClient("mongodb://localhost:27017");
   console.log(bodyPartList);
@@ -10,19 +10,19 @@ export default async function findWorkout(bodyPartList, excludedEquipment) {
     await client.connect();
 
     // database name: workoutAppBackend 
-    // collection name: workouts
+    // collection name: exercises
     const coll = client.db("workoutAppBackend").collection("exercises");
 
     const query = {
       bodyParts: { $in: bodyPartList },
-      exEquipment: { $nin: excludedEquipment }
+      exEquipment: { $in: includedEquipment }
     };
 
-    const workouts = await coll.find(query).limit(12).toArray();
+    const exercises = await coll.find(query).limit(12).toArray();
 
-    // returns an array of workout documents that match the query
+    // returns an array of exercises documents that match the query
     // limited to a maximum of 12 exercises
-    return workouts;
+    return exercises;
 
   } catch (error) {
     console.error(error);
