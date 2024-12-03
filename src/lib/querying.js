@@ -1,6 +1,6 @@
 const { MongoClient } = require("mongodb");
 
-export default async function findWorkout(bodyPartList, includedEquipment) {
+export default async function findExercise(bodyPartList, includedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // includedEquipment - array of strings i.e. ["band", "barbell"]
 
@@ -33,7 +33,7 @@ export default async function findWorkout(bodyPartList, includedEquipment) {
 }
 
 
-// async function storeWorkout(workout) {
+// async function storeWorkout(exercises) {
 //   "use server";
 //   const client = new MongoClient("mongodb://localhost:27017");
 //   try {
