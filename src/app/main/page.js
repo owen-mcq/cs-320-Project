@@ -6,11 +6,8 @@ import handler from '@/actions/returnExercises';
 import ExerciseList from '@/components/ui/exerciseList';
 
 export default function Home() {
+  // State is serialized data
   const [state, formAction] = useActionState(handler, "[]");
-  // console.log()
-  // for (let item of JSON.parse(state)) {
-  //   console.log(item)
-  // }
   return (
     <div className="min-h-screen">
       <main className="w-full">
