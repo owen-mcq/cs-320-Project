@@ -81,7 +81,7 @@ export function Selector({
 }) {
   return (
     <div className={`grid grid-cols-4 items-center gap-2`}>
-      {items.map((item, index) => 
+      {items.map((item, index) =>
         (
           <>
             <input

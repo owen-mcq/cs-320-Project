@@ -1,18 +1,20 @@
 'use client'
 
 import { ExerciseForm } from "@/components/ui/workout-form";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import handler from '@/actions/returnExercises';
-import ExerciseList from '@/components/ui/exerciseList';
+import { MutableList } from '@/components/ui/exerciseList';
 
 export default function Home() {
   // State is serialized data
-  const [state, formAction] = useActionState(handler, "[]");
+  const [state, innerformAction] = useActionState(handler, "[]");
+  const formAction = data => { innerformAction(data); setLocalState(JSON.parse(state));};
+  const [localState, setLocalState] = useState(JSON.parse(state));
   return (
     <div className="min-h-screen">
       <main className="w-full">
         <ExerciseForm handler={formAction}/>
-        <ExerciseList exercises={JSON.parse(state)}/>
+        <MutableList exercises={localState} setLocalState={setLocalState}/>
       </main>
     </div>
   );
