@@ -14,29 +14,49 @@ async function getEquipment() {
   return equipment;
 }
 
-export default async function findWorkout(bodyPartList, _excludedEquipment) {
+export default async function findExercise(bodyPartList, _includedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
-  // excludedEquipment - array of strings i.e. ["band", "barbell"]
+  // includedEquipment - array of strings i.e. ["band", "barbell"]
 
   const client = new MongoClient("mongodb://localhost:27017/");
   console.log(bodyPartList);
   try {
     await client.connect();
 
-    // database name: workoutAppBackend 
-    // collection name: workouts
+    // Database name: workoutAppBackend
+    // Collection name: exercises
     const coll = client.db("workoutAppBackend").collection("exercises");
     const equipment = await getEquipment()
-    const query = {
-      bodyParts: { $in: bodyPartList },
-      Equipment: { $in:  equipment}
-    };
 
-    const workouts = await coll.find(query).limit(12).toArray();
-    console.log(workouts)
-    // returns an array of workout documents that match the query
-    // limited to a maximum of 12 exercises
-    return workouts;
+    // const workouts = await coll.find(query).limit(12).toArray();
+    // console.log(workouts)
+    // // returns an array of workout documents that match the query
+    // // limited to a maximum of 12 exercises
+    // return workouts;
+
+    const exerciseCount = 12;
+    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
+    const remaining = exerciseCount % bodyPartList.length;
+
+    let exerciseList = [];
+
+    for (let i = 0; i < bodyPartList.length; i++) {
+      const bodyPart = bodyPartList[i];
+      const limit = i < remaining ? perBodyPart + 1 : perBodyPart;
+
+      const query = {
+        bodyParts: bodyPart,
+        exEquipment: { $nin: equipment },
+      };
+
+      const exercises = await coll.find(query).limit(limit).toArray();
+      exerciseList = exerciseList.concat(exercises);
+    }
+
+    // Shuffle the final results
+    exerciseList = exerciseList.sort(() => Math.random() - 0.5);
+
+    return exerciseList;
 
   } catch (error) {
     console.error(error);
@@ -47,7 +67,8 @@ export default async function findWorkout(bodyPartList, _excludedEquipment) {
 }
 
 
-// async function storeWorkout(workout) {
+
+// async function storeWorkout(exercises) {
 //   "use server";
 //   const client = new MongoClient("mongodb://localhost:27017");
 //   try {
