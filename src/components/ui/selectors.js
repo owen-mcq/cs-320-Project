@@ -2,6 +2,12 @@
 
 import { Toggle } from "@/components/ui/toggle";
 import { cn } from "@/lib/utils";
+import "@/components/ui/selectors.css"
+import { useActionState } from "react";
+import handler from "@/actions/saveEquipment"
+import { useState, useTransition } from 'react';
+
+
 
 export function PartSelector({ selectedParts, setSelectedParts }) {
   const bodyParts = [
@@ -19,15 +25,13 @@ export function PartSelector({ selectedParts, setSelectedParts }) {
 
   return (
     <Selector
-      prefix="parts_"
+      // prefix="parts_"
       items={bodyParts}
-      selectedValues={selectedParts}
-      setSelectedValues={setSelectedParts}
     />
   );
 }
 
-export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
+export function EquipmentSelector({ selectedEquipment }) {
   const equipment = [
     "stepmill machine",
     "elliptical machine",
@@ -59,12 +63,13 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
     "body weight",
   ];
 
+  // console.log(selectedEquipment)
+  
   return (
     <Selector
-      prefix="equipment_"
       items={equipment}
       selectedValues={selectedEquipment}
-      setSelectedValues={setSelectedEquipment}
+      onclick={event => event.target.form.requestSubmit()}
     />
   );
 }
@@ -74,11 +79,13 @@ export function EquipmentSelector({ selectedEquipment, setSelectedEquipment }) {
  * TODO: Add a "clear selection" function
  */
 export function Selector({
-  prefix,
+  // prefix,
   items = [],
-  selectedValues = [],
+  selectedValues = ["stepmill machine"],
   setSelectedValues,
+  onclick = () => {},
 }) {
+
   return (
     <div className={`grid grid-cols-4 items-center gap-2`}>
       {items.map((item, index) =>
@@ -86,23 +93,14 @@ export function Selector({
           <>
             <input
               type="checkbox"
-              name={prefix + item}
+              id={item}
+              name={item}
               key={index + 1000}
-              // className={cn(
-              //   "flex items-center jusitfy-center text-black text-xs border-2",
-              //   isPressed ? `border-black` : "border-transparent bg-gray-50",
-              // )}
-              // pressed={isPressed}
-              // onPressedChange={(pressed) => {
-              //   const newValue = pressed
-              //     ? [...selectedValues, item]
-              //     : selectedValues.filter((val) => val !== item);
-              //   setSelectedValues(newValue);
-              // }}
+              defaultChecked={selectedValues.includes(item)}
+              onClick={onclick}
             />
             <label for={item} key={index}>{item}</label>
           </>
-          
         )
       )}
     </div>

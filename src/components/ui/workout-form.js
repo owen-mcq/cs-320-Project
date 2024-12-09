@@ -42,20 +42,6 @@ export function ExerciseForm({ handler }) {
             />
           </CardContent>
         </Card>
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Exclude Equipment</CardTitle>
-            <CardDescription>
-              Specify equipment to exlude from exercises
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <EquipmentSelector
-              // selectedEquipment={equipment}
-              // setSelectedEquipment={setEquipment}
-            />
-          </CardContent>
-        </Card>
       </div>
       <Button type="submit" className="h-10 w-1/2">
         Generate

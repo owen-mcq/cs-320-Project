@@ -11,6 +11,7 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    equipment: [String],
   },
   // require createdAt field when stored to db (I think?)
   { timestamps: true },

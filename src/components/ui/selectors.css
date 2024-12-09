@@ -1,0 +1,19 @@
+/* .selector {
+    display: none;
+} */
+
+input {
+    display: none;
+}
+
+label {
+    border-width: 1px;
+    border-radius: 20px;
+    padding-left: 10px;
+}
+
+input:checked + label {
+    color: white;
+    background-color: black;
+}
+

@@ -1,6 +1,8 @@
 const { MongoClient } = require("mongodb");
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
-export default async function findWorkout(bodyPartList, excludedEquipment) {
+export default async function findWorkout(bodyPartList, _excludedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // excludedEquipment - array of strings i.e. ["band", "barbell"]
 
@@ -8,14 +10,19 @@ export default async function findWorkout(bodyPartList, excludedEquipment) {
   console.log(bodyPartList);
   try {
     await client.connect();
+    const session = await getServerSession(authOptions);
+    const username = session.user.username;
 
+    const coll1 = client.db("workoutAppBackend").collection("users");
+    const equipment = await coll1.findOne({username:username}).equipment.toArray();
+console.log(equipment)
     // database name: workoutAppBackend 
     // collection name: workouts
     const coll = client.db("workoutAppBackend").collection("exercises");
 
     const query = {
       bodyParts: { $in: bodyPartList },
-      exEquipment: { $nin: excludedEquipment }
+      Equipment: { $in: equipment }
     };
 
     const workouts = await coll.find(query).limit(12).toArray();
