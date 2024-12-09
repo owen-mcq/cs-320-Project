@@ -15,8 +15,6 @@ export async function saveEquipment(previousState, form) {
         return JSON.stringify(await (await User.findOne({ username: username })).get('equipment'));
     }
        
-
-    
     const data = Array.from(form.entries().filter(([_, value]) => value === 'on').map(([key, _]) => key));
     const equipment = await User.updateOne({ username: username }, {equipment: data});
     //   console.log(data)

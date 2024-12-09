@@ -9,7 +9,7 @@ import { useState, useTransition } from 'react';
 
 
 
-export function PartSelector({ selectedParts, setSelectedParts }) {
+export function PartSelector({ selectedParts=[], onclick }) {
   const bodyParts = [
     "neck",
     "lower arms",
@@ -22,11 +22,12 @@ export function PartSelector({ selectedParts, setSelectedParts }) {
     "upper legs",
     "waist",
   ];
-
   return (
     <Selector
       // prefix="parts_"
       items={bodyParts}
+      selectedValues={selectedParts}
+      onclick={onclick}
     />
   );
 }
@@ -68,7 +69,7 @@ export function EquipmentSelector({ selectedEquipment }) {
   return (
     <Selector
       items={equipment}
-      selectedValues={selectedEquipment}
+      // selectedValues={selectedEquipment}
       onclick={event => event.target.form.requestSubmit()}
     />
   );
