@@ -9,20 +9,33 @@ export default async function findExercise(bodyPartList, includedEquipment) {
   try {
     await client.connect();
 
-    // database name: workoutAppBackend 
-    // collection name: exercises
+    // Database name: workoutAppBackend
+    // Collection name: exercises
     const coll = client.db("workoutAppBackend").collection("exercises");
 
-    const query = {
-      bodyParts: { $in: bodyPartList },
-      exEquipment: { $in: includedEquipment }
-    };
+    const exerciseCount = 12;
+    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
+    const remaining = exerciseCount % bodyPartList.length;
 
-    const exercises = await coll.find(query).limit(12).toArray();
+    let exerciseList = [];
 
-    // returns an array of exercises documents that match the query
-    // limited to a maximum of 12 exercises
-    return exercises;
+    for (let i = 0; i < bodyPartList.length; i++) {
+      const bodyPart = bodyPartList[i];
+      const limit = i < remaining ? perBodyPart + 1 : perBodyPart;
+
+      const query = {
+        bodyParts: bodyPart,
+        exEquipment: { $nin: includedEquipment },
+      };
+
+      const exercises = await coll.find(query).limit(limit).toArray();
+      exerciseList = exerciseList.concat(exercises);
+    }
+
+    // Shuffle the final results
+    exerciseList = exerciseList.sort(() => Math.random() - 0.5);
+
+    return exerciseList;
 
   } catch (error) {
     console.error(error);
@@ -31,6 +44,7 @@ export default async function findExercise(bodyPartList, includedEquipment) {
     await client.close();
   }
 }
+
 
 
 // async function storeWorkout(exercises) {
