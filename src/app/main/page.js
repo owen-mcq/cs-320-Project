@@ -7,6 +7,7 @@ import { MutableList } from '@/components/ui/exerciseList';
 
 export default function Home() {
   // State is serialized data
+
   const [state, innerformAction] = useActionState(handler, "[]");
   const formAction = data => { innerformAction(data);  setLocalState(JSON.parse(state));};
   const [localState, setLocalState] = useState(JSON.parse(state));
