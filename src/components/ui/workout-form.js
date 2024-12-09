@@ -20,7 +20,14 @@ import { useState } from "react";
 export function ExerciseForm({ handler }) {
   // arrays to store the equipment and bodyparts that are selected
   // const [equipment, setEquipment] = useState([]);
-  // const [bodyParts, setBodyParts] = useState([]);
+  const [bodyParts, setBodyParts] = useState([]);
+  
+  function onclick(event) {
+    const formdata = new FormData(event.target.form);
+    const data = formdata.entries().filter(([_, value]) => value === 'on').map(([key, _]) => key);
+    setBodyParts(Array.from(data));
+    // console.log(bodyParts)
+  }
 
   return (
     <form
@@ -37,22 +44,8 @@ export function ExerciseForm({ handler }) {
           </CardHeader>
           <CardContent>
             <PartSelector
-              // selectedParts={bodyParts}
-              // setSelectedParts={setBodyParts}
-            />
-          </CardContent>
-        </Card>
-        <Card className="w-full">
-          <CardHeader>
-            <CardTitle>Exclude Equipment</CardTitle>
-            <CardDescription>
-              Specify equipment to exlude from exercises
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <EquipmentSelector
-              // selectedEquipment={equipment}
-              // setSelectedEquipment={setEquipment}
+              selectedParts={bodyParts}
+              onclick={onclick}
             />
           </CardContent>
         </Card>
