@@ -15,6 +15,7 @@ async function getEquipment() {
 }
 
 export default async function findExercise(bodyPartList, _includedEquipment) {
+
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // includedEquipment - array of strings i.e. ["band", "barbell"]
 
@@ -38,6 +39,10 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
     const remaining = exerciseCount % bodyPartList.length;
 
+    const exerciseCount = 12;
+    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
+    const remaining = exerciseCount % bodyPartList.length;
+
     let exerciseList = [];
 
     for (let i = 0; i < bodyPartList.length; i++) {
@@ -46,7 +51,7 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
 
       const query = {
         bodyParts: bodyPart,
-        exEquipment: { $nin: equipment },
+        exEquipment: { $nin: includedEquipment },
       };
 
       const exercises = await coll.find(query).limit(limit).toArray();
