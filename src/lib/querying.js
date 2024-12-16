@@ -93,4 +93,3 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
 //   }
 
 // }
-
