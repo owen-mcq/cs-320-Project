@@ -17,9 +17,9 @@ export default function BodyCard({ title, parts, options, handleChange }) {
         <label
           key={part.name}
           className={clsx(
-            "flex flex-row rounded-md gap-4 p-3 items-center shadow-card border border-slate-200",
+            "flex flex-row rounded-md gap-4 p-3 items-center shadow-md border border-slate-200",
             {
-              "bg-black text-white": options.includes(part.name),
+              "border-slate-600": options.includes(part.name),
             },
           )}
         >
