@@ -69,7 +69,7 @@ export function EquipmentSelector({ selectedEquipment }) {
   return (
     <Selector
       items={equipment}
-      // selectedValues={selectedEquipment}
+      selectedValues={selectedEquipment}
       onclick={event => event.target.form.requestSubmit()}
     />
   );
@@ -100,7 +100,7 @@ export function Selector({
               defaultChecked={selectedValues.includes(item)}
               onClick={onclick}
             />
-            <label for={item} key={index}>{item}</label>
+            <label htmlFor={item} key={index}>{item}</label>
           </>
         )
       )}

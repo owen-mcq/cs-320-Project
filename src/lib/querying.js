@@ -1,17 +1,15 @@
-const { MongoClient } = require("mongodb");
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import User  from "@/models/User";
+import User from "@/models/User";
+import Exercise from "@/models/Exercise";
 
 async function getEquipment() {
-  const connection = await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+  // const connection = await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
   const session = await getServerSession(authOptions);
   const username = session.user.username;
-
-  // const coll1 = client.db("workoutAppBackend").collection("users");
-  const equipment = await (await User.findOne({ username: username })).get('equipment');
-  return equipment;
+  const equipment =  await User.findOne({ username: username }, 'equipment').exec();
+  return equipment.equipment;
 }
 
 export default async function findExercise(bodyPartList, _includedEquipment) {
@@ -19,25 +17,12 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // includedEquipment - array of strings i.e. ["band", "barbell"]
 
-  const client = new MongoClient("mongodb://localhost:27017/");
+  await mongoose.connect("mongodb://localhost:27017/workoutAppBackend");
   console.log(bodyPartList);
   try {
-    await client.connect();
-
     // Database name: workoutAppBackend
     // Collection name: exercises
-    const coll = client.db("workoutAppBackend").collection("exercises");
-    const equipment = await getEquipment()
-
-    // const workouts = await coll.find(query).limit(12).toArray();
-    // console.log(workouts)
-    // // returns an array of workout documents that match the query
-    // // limited to a maximum of 12 exercises
-    // return workouts;
-
-    const exerciseCount = 12;
-    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
-    const remaining = exerciseCount % bodyPartList.length;
+    const equipment = await getEquipment();
 
     const exerciseCount = 12;
     const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
@@ -51,10 +36,10 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
 
       const query = {
         bodyParts: bodyPart,
-        exEquipment: { $nin: includedEquipment },
+        equipment: equipment,
       };
 
-      const exercises = await coll.find(query).limit(limit).toArray();
+      const exercises = await (Exercise.find(query).limit(limit).exec());
       exerciseList = exerciseList.concat(exercises);
     }
 
@@ -67,7 +52,7 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     console.error(error);
     throw new Error("Failed to fetch workouts");
   } finally {
-    await client.close();
+    await mongoose.disconnect();
   }
 }
 
