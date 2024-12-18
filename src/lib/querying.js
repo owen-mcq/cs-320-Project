@@ -39,10 +39,6 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
     const remaining = exerciseCount % bodyPartList.length;
 
-    const exerciseCount = 12;
-    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
-    const remaining = exerciseCount % bodyPartList.length;
-
     let exerciseList = [];
 
     for (let i = 0; i < bodyPartList.length; i++) {
