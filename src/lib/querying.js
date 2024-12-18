@@ -13,7 +13,6 @@ async function getEquipment() {
 }
 
 export default async function findExercise(bodyPartList, _includedEquipment) {
-
   // bodyParts - array of strings i.e. ["waist", "chest"]
   // includedEquipment - array of strings i.e. ["band", "barbell"]
 
@@ -23,11 +22,6 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     // Database name: workoutAppBackend
     // Collection name: exercises
     const equipment = await getEquipment();
-
-    const exerciseCount = 12;
-    const perBodyPart = Math.floor(exerciseCount / bodyPartList.length);
-    const remaining = exerciseCount % bodyPartList.length;
-
     let exerciseList = [];
 
     for (let i = 0; i < bodyPartList.length; i++) {
@@ -47,7 +41,6 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     exerciseList = exerciseList.sort(() => Math.random() - 0.5);
 
     return exerciseList;
-
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch workouts");
@@ -55,8 +48,6 @@ export default async function findExercise(bodyPartList, _includedEquipment) {
     await mongoose.disconnect();
   }
 }
-
-
 
 // async function storeWorkout(exercises) {
 //   "use server";

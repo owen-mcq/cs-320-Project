@@ -55,6 +55,9 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      boxShadow: {
+        card: "0px 1px 4px rgba(0, 0, 0, 0.05)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
