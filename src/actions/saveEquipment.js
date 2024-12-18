@@ -3,10 +3,12 @@ import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import User from '@/models/User'
+import connectDB from "@/lib/mongodb";
 
 
 export async function saveEquipment(_previousState, form) {
-    await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+    // await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+    await connectDB();
     const session = await getServerSession(authOptions);
     const username = session.user.username;
 
@@ -16,6 +18,6 @@ export async function saveEquipment(_previousState, form) {
        
     const data = Array.from(form.entries().filter(([_, value]) => value === 'on').map(([key, _]) => key));
     await User.updateOne({ username: username }, {equipment: data});
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
     return JSON.stringify(data);
 }

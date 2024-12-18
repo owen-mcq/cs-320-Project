@@ -2,12 +2,14 @@
 import mongoose from "mongoose";
 import User from "@/models/User";
 import bcrypt from "bcrypt";
+import connectDB from "@/lib/mongodb";
 
 export async function register(values) {
   const { username, password } = values;
 
   try {
-    await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+    // await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+    await connectDB();
     const userFound = await User.findOne({ username });
     if (userFound) {
       return {
@@ -23,6 +25,6 @@ export async function register(values) {
   } catch (error) {
     console.log(error);
   } finally {
-    await mongoose.disconnect();
+    // await mongoose.disconnect();
   }
 }

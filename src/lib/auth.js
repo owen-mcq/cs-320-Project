@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import User from "@/models/User";
 import credentials from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
+import connectDB from "@/lib/mongodb";
 
 export const authOptions = {
   secret: "x0NCOOymWv+aFes8G00rGFbQEP3wSselAN7qjWdtNBw=",
@@ -15,13 +16,14 @@ export const authOptions = {
       },
       // verify user creditials
       async authorize(credentials) {
-        await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
+        await connectDB();
+        // await mongoose.connect("mongodb://127.0.0.1:27017/workoutAppBackend");
         const user = await User.findOne({
           username: credentials?.username,
-        }).select("+password");
+        }).select("+password").exec();
 
         if (!user) throw new Error("Wrong Username");
-        await mongoose.disconnect();
+        // await mongoose.disconnect();
 
         const passwordMatch = await bcrypt.compare(
           credentials.password,
@@ -52,8 +54,8 @@ export const authOptions = {
     },
   },
   // Optional: add error handling
-  pages: {
-    signIn: "/login",
-    error: "/login", // Error code passed in query string as ?error=
-  },
+  // pages: {
+  //   signIn: "/login",
+  //   error: "/login", // Error code passed in query string as ?error=
+  // },
 };
