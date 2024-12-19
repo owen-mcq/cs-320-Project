@@ -17,7 +17,7 @@ async function storeWorkout(workout) {
   let tommorrow = new Date();
   tommorrow.setDate(tommorrow.getDate() + 1);
   const exerciseIds = workout.map(exercise => exercise.exerciseId);
-  await Workout.updateOne({username: username, date: {$gte: new Date().toDateString(), $lt: tommorrow}}, {exerciseIds: exerciseIds}, {upsert: true});
+  await Workout.updateOne({username: username, date: {$gte: new Date().toDateString(), $lt: tommorrow}}, {date:new Date(), exerciseIds: exerciseIds}, {upsert: true});
   // await mongoose.disconnect();
 }
 

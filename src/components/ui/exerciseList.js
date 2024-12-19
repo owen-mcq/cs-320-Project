@@ -1,12 +1,13 @@
-export function DisplayList( {exercises} ) {
+export function DisplayList( {toptext, pexercises} ) {
+  let exercises = pexercises.flat();
   return (
         <div>
-          <h1 className="text-xl font-bold mb-4">Today's Workout</h1>
+          <h1 className="text-xl font-bold mb-4">{toptext} Workout</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {Array.from(exercises).map((item, index) => (
               <div key={index} className="border p-4 rounded">
                 <p className="font-bold">Exercise: {item.name}</p>
-                {}<p>Equipment: {item.equipments.length > 0 ? item.equipments : "No Equipment Required"}</p>
+                {}<p>Equipment: {item.equipment.length > 0 ? item.equipment : "No Equipment Required"}</p>
                 <div>
                   <p className="font-bold mt-2">Instructions:</p>
                   {item.instructions.map((step, stepIndex) => (
